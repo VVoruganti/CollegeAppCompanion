@@ -66,12 +66,14 @@ app.post('/main', function(req, res) {
         "from": "12016441506",
         "text": "Hello " + req.body.name + "! Welcome to collegeapp.io's text messaging notification service! Please note standard sms fees apply."
     }
-  }, 
-            function(err,httpResponse,body){ console.log(body) }
-    );
+  }, function(err,httpResponse,body){ console.log(body) });
 
-    res.sendfile("./main.html");
+  res.sendfile("./main.html");
 })
+
+app.post('/addcollege', function(req, res) {
+    console.log(req.body);
+});
 
 app.listen(3000)
 

@@ -8,7 +8,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         
         
     } else {
-        document.body.innerHTML += ""; //todo figure this out
+        document.body.innerHTML += "<h4> enter a college! </h4> <form action='/addcollege' method='post'> <input type='text' name='college'> <input type='submit'> </form>"; //todo figure this out
     }
 } else {
     window.location.replace("login");
@@ -17,5 +17,5 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function checkIfUserInit() {
     //TODO add code
-    return false;
+    return true;
 }
