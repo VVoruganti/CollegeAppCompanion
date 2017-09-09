@@ -28,7 +28,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function checkIfUserInit() {
     //TODO add code
-    return true;
+    return false;
 }
 
 function updateDataTable() {

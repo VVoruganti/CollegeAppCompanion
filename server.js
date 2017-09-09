@@ -10,12 +10,12 @@ var admin = require("firebase-admin");
 
 var serviceAccount = require("serviceAccountKey.json");
 
-admin.initializeApp({
+var defaultApp = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://test-project-e424f.firebaseio.com"
 });
 
-
+var database = defaultApp.database();
 
 
 /* var admin = require("firebase-admin");
@@ -42,11 +42,11 @@ app.get('/', function(req, res){
 
 app.get('/login', function(req, res) {
     res.sendfile('./login.html');
-})
+});
 
 app.get('/test', function(req, res) {
     res.sendfile('./test.html');
-})
+});
 
 
 
@@ -56,7 +56,9 @@ app.get("/main", function(req, res) {
 });
 
 app.post('/main', function(req, res) {
-    console.log(req.body);
+    var r=req.body; 
+    writeUserData(r.uid,r.name,r.email,r.phone);
+    console.log(req.body.uid);
    // $.post("https://rest.nexmo.com/sms/json",, (data, status, xhr) => {console.log(data)});
     
     request.post('https://rest.nexmo.com/sms/json', {form:{
@@ -76,5 +78,14 @@ app.post('/addcollege', function(req, res) {
     
 });
 
-app.listen(3000)
+function writeUserData(userId, name, email, phoneNumber) {
+    database.ref('users/' + userId).set({
+    username: name,
+    email: email,
+    phone_number: phoneNumber
+  })
+}
+        
+
+app.listen(3000);
 
