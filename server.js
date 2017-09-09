@@ -61,30 +61,67 @@ app.post('/main', function(req, res) {
     console.log(req.body.uid);
    // $.post("https://rest.nexmo.com/sms/json",, (data, status, xhr) => {console.log(data)});
     
-    request.post('https://rest.nexmo.com/sms/json', {form:{
+ /*   request.post('https://rest.nexmo.com/sms/json', {form:{
         "api_key": "3763e1cc",
         "api_secret": "6efbe39cd7742b20",
         "to": req.body.phone,
         "from": "12016441506",
         "text": "Hello " + req.body.name + "! Welcome to collegeapp.io's text messaging notification service! Please note standard sms fees apply."
-    }
-  }, function(err,httpResponse,body){ console.log(body) });
+    } 
+  }, function(err,httpResponse,body){ console.log(body) }); */
 
   res.sendfile("./main.html");
+
 })
 
 app.post('/addcollege', function(req, res) {
     console.log(req.body);
-    
+    appendCollege(req.body.uid, req.body.college)
+    userId = req.body.uid;
+    college = req.body.college;
+    database.ref('/users/' + userId).once('value').then(function(snapshot) {
+        var colleges = (snapshot.val() && snapshot.val().colleges) || {};
+        if(colleges[college]) {
+            res.status(500).send("");
+            return false;
+        }
+        colleges[college] = {'name':college};
+        database.ref('users/' + userId + "/colleges").set(colleges);
+        res.status(200).send("");
+    }); 
+
+});
+
+app.post('/checkuser', function(req, res) {
+    database.ref('/users/' + req.body.uid).once('value').then(function(snapshot) {
+        if(snapshot.val()) {
+            res.status(500).send("haha");
+        } else {
+            res.status(200).send("hehe");
+        }
+    });
+});
+
+app.post('/getcolleges', function(req, res) {
+    console.log(req.body);
+    database.ref('/users/' + req.body.uid + '/colleges').once('value').then(function(snapshot) {
+        console.log(JSON.stringify(snapshot.val()));
+        res.status(200).send(snapshot.val());
+    });
 });
 
 function writeUserData(userId, name, email, phoneNumber) {
-    database.ref('users/' + userId).set({
+  database.ref('users/' + userId).set({
     username: name,
     email: email,
-    phone_number: phoneNumber
+    phone_number: phoneNumber,
+    colleges:{"total":0}
   })
 }
+
+function appendCollege(userId, college) {
+
+};
         
 
 app.listen(3000);
