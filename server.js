@@ -73,6 +73,7 @@ app.post('/main', function(req, res) {
 
 app.post('/addcollege', function(req, res) {
     console.log(req.body);
+    
 });
 
 app.listen(3000)
