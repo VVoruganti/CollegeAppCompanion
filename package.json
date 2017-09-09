@@ -1,0 +1,31 @@
+{
+  "name": "collegeapp",
+  "version": "1.0.0",
+  "description": "college app",
+  "main": "server.js",
+  "dependencies": {
+    "connect-busboy": "^0.0.2",
+    "cors": "^2.8.4",
+    "body-parser": "^1.18.0",
+    "express": "^4.15.4",
+    "firebase": "^4.3.1",
+    "firebase-admin": "^5.2.1",
+    "request": "^2.81.0",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VVoruganti/CollegeAppCompanion.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VVoruganti/CollegeAppCompanion/issues"
+  },
+  "homepage": "https://github.com/VVoruganti/CollegeAppCompanion#readme"
+}

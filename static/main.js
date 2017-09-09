@@ -8,7 +8,18 @@ firebase.auth().onAuthStateChanged(function(user) {
         
         
     } else {
-        document.body.innerHTML += "<h4> enter a college! </h4> <form action='/addcollege' method='post'> <input type='text' name='college'> <input type='submit'> </form>"; //todo figure this out
+        document.body.innerHTML += "<h4> enter a college! </h4> <form id='myForm'> <input type='text' name='college'> <input type='hidden' name='uid' value='" + user.uid +"'/> <input type='submit'> </form>"; //todo figure this out
+        
+        $('#myForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'/addcollege',
+            type:'post',
+            data:$('#myForm').serialize(),
+            success:updateDataTable()
+    });
+});
+
     }
 } else {
     window.location.replace("login");
@@ -18,4 +29,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 function checkIfUserInit() {
     //TODO add code
     return true;
+}
+
+function updateDataTable() {
+    alert("Successfully added!");
 }
