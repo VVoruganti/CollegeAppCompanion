@@ -50,8 +50,11 @@ function populateCollegeTable(user) {
                 console.log(k);
                 if(k!=="total") {
                     str += "<tr>";
+                    str += "<td> "+ text[k]["deadline"] + "</td>";
+                    str += "<td> "+ text[k]["name"] + "</td>";
+
+
                     Object.keys(text[k]).forEach(function(q) {
-                        str += "<td>" + q + " : "+ text[k][q] + "</td>";
                     })
                     str += `<td> <input type="date" name="bday" id=` + k + `>  <button onclick="addDeadline('` + k + `')"> add/edit deadline </button> </td>`
                     

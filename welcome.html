@@ -3,11 +3,21 @@
 <head>
     <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css"> <!-- MDL Libraries -->
     <script src="node_modules/material-design-lite/material.min.js"></script>
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase-messaging.js"></script>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="static/firebase.js"></script>
+
+    <script src="static/googlesign.js"></script>
 <body>
   <div class="mdl-card mdl-shadow--4dp" id="welcome-card">
     <div class="mdl-card__title center-align">
@@ -19,7 +29,8 @@
       </div>
     </div>
   </div>
-
-
+    <a ><button onclick="doLogin()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color--blue-A200">
+  Button
+</button></a> <br>
 </body>
 </html>
