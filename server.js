@@ -110,6 +110,15 @@ app.post('/getcolleges', function(req, res) {
     });
 });
 
+app.post('/deadlines', function(req, res) {
+    console.log(req.body);
+    updates = {};
+    updates['users/' + req.body.uid + '/colleges/' + req.body.college + "/" + "deadline"] = {"deadline" : req.body.deadline};
+    database.ref('users/' + req.body.uid + '/colleges/' + req.body.college).update({
+        "deadline":req.body.deadline
+    })
+})
+
 function writeUserData(userId, name, email, phoneNumber) {
   database.ref('users/' + userId).set({
     username: name,
@@ -118,6 +127,8 @@ function writeUserData(userId, name, email, phoneNumber) {
     colleges:{"total":0}
   })
 }
+
+
 
 function appendCollege(userId, college) {
 
