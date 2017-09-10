@@ -1,8 +1,35 @@
 h1 {
-  text-align:center
+  text-align:center;
 }
+
+body {
+  background-color: #f44336;
+}
+
 button {
-  width:10em;
-  height:8em;
   margin:auto;
+  background-color:#849324;
+}
+
+button:hover{
+  transition:0.2s;
+  transform:scale(1.1);
+}
+
+.mdl-cell {
+  text-align: center;
+}
+
+#welcome-card {
+  margin-top:40%;
+  margin:auto;
+  vertical-align: middle;
+  background-color: #ffb30f;
+  margin-top:50px;
+}
+
+.mdl-card{
+  margin:auto;
+  width:512px;
+  margin-top:50px;
 }
