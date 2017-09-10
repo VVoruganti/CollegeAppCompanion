@@ -33,3 +33,10 @@ button:hover{
   width:512px;
   margin-top:50px;
 }
+
+.main-card {
+  margin:auto;
+  background-color:#ffb30f;
+  margin-top:50px;
+
+}
