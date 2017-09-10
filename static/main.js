@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             <input type="hidden" name="name" value="` + user.displayName + `"/>  <input type="hidden" name="uid" value="` + user.uid + `"/> <br> enter your email so we can email you notifications <br> <input type="text" name="email"> <input type="submit"/>`;
         },
         error:function(jqXHR, exception) {
-            document.body.innerHTML += "<h4> enter a college! </h4> <form id='myForm'> <input type='text' name='college'> <input type='hidden' name='uid' value='" + user.uid +"'/> <input type='submit'> </form> <br> <p id='colleges'></p>"; //todo figure this out
+            document.body.innerHTML += "<h4> enter a college! </h4> <form id='myForm'> <input type='text' name='college'> <input type='hidden' name='uid' value='" + user.uid +"'/> <input type='submit'> </form> <br> <table><tbody id='colleges'> </tbody></table>"; //todo figure this out
 
             populateCollegeTable(user);
             $('#myForm').submit(function(e){
@@ -22,6 +22,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                     data:$('#myForm').serialize(),
                     success:function() {
                         alert("Successfully added!");
+                        populateCollegeTable(user);
                     },
                     error:function(jqXHR, exception) {
                         alert("Something went wrong - that college probably already exists in your records");
@@ -35,16 +36,36 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
+"<tr> <td> data </td> <td> data2 </td> </tr>"
+
 function populateCollegeTable(user) {
     $.ajax({
         url:'/getcolleges',
         type:'post',
         data:{'uid':user.uid},
         success:function(text) {
-            
-            document.getElementById('colleges').innerText = JSON.stringify(text);
+            document.getElementById('colleges').innerHTML = "";
+            var str = "";
+            Object.keys(text).forEach(function(k){
+                console.log(k);
+                if(k!=="total") {
+                    str += "<tr>";
+                    Object.keys(text[k]).forEach(function(q) {
+                        str += "<td>" + q + " : "+ text[k][q] + "</td>";
+                    })
+                    str += `<td></td> <td> <input type="date" name="bday">  <button onclick="addDeadline('` + k + `')"> add deadline </button> </td>`
+                    
+                    str += "</tr>";
+                }
+            });
+            document.getElementById('colleges').innerHTML = str;
+            console.log(document.getElementById('colleges').innerHTML);
         },
         error:function(jqXHR, exception) {
             alert("Something went wrong - that college probably already exists in your records");
         }});
+}
+
+function addDeadline(college) {
+    console.log(college);
 }
