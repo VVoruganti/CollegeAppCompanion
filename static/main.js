@@ -1,4 +1,5 @@
 firebase.auth().onAuthStateChanged(function(user) {
+  var globaluser = user;
   if (user) {
     document.getElementById("welcome").innerText = "Welcome " + user.displayName;
     
@@ -36,7 +37,6 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-"<tr> <td> data </td> <td> data2 </td> </tr>"
 
 function populateCollegeTable(user) {
     $.ajax({
@@ -53,7 +53,7 @@ function populateCollegeTable(user) {
                     Object.keys(text[k]).forEach(function(q) {
                         str += "<td>" + q + " : "+ text[k][q] + "</td>";
                     })
-                    str += `<td></td> <td> <input type="date" name="bday">  <button onclick="addDeadline('` + k + `')"> add deadline </button> </td>`
+                    str += `<td> <input type="date" name="bday" id=` + k + `>  <button onclick="addDeadline('` + k + `')"> add/edit deadline </button> </td>`
                     
                     str += "</tr>";
                 }
@@ -67,5 +67,14 @@ function populateCollegeTable(user) {
 }
 
 function addDeadline(college) {
+    var user = firebase.auth().currentUser;
     console.log(college);
+    $.ajax({       
+        url:'/deadlines',
+        type:'post',
+        data:{'uid':user.uid, "college":college, "deadline":document.getElementById(college).value},
+        success: new function() {
+            
+        }
+    });
 }
