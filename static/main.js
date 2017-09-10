@@ -77,7 +77,7 @@ function addDeadline(college) {
         type:'post',
         data:{'uid':user.uid, "college":college, "deadline":document.getElementById(college).value},
         success: new function() {
-            
+            populateCollegeTable(user);
         }
     });
 }

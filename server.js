@@ -1,5 +1,9 @@
 var express = require('express');
 var app = express();
+app.use('/static', express.static('static'));
+app.use('/node_modules',express.static('node_modules'));
+app.use('/stylesheets',express.static('stylesheets'));
+
 var bodyParser = require('body-parser');
 var jquery = require('jquery');
 var $ = jquery;
@@ -34,9 +38,6 @@ app.use(cors());
 
 
 
-app.use('/static', express.static('static'));
-app.use('/node_modules',express.static('node_modules'));
-app.use('/stylesheets',express.static('stylesheets'));
 
 app.get('/', function(req, res){
   res.sendfile('./welcome.html');
@@ -63,14 +64,14 @@ app.post('/main', function(req, res) {
     console.log(req.body.uid);
    // $.post("https://rest.nexmo.com/sms/json",, (data, status, xhr) => {console.log(data)});
 
- /*   request.post('https://rest.nexmo.com/sms/json', {form:{
+    request.post('https://rest.nexmo.com/sms/json', {form:{
         "api_key": "3763e1cc",
         "api_secret": "6efbe39cd7742b20",
         "to": req.body.phone,
         "from": "12016441506",
         "text": "Hello " + req.body.name + "! Welcome to collegeapp.io's text messaging notification service! Please note standard sms fees apply."
     }
-  }, function(err,httpResponse,body){ console.log(body) }); */
+  }, function(err,httpResponse,body){ console.log(body) }); 
 
   res.sendfile("./main.html");
 
@@ -137,4 +138,4 @@ function appendCollege(userId, college) {
 };
 
 
-app.listen(3000);
+app.listen(8080);

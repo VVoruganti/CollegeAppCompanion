@@ -18,6 +18,7 @@ var database = defaultApp.database()
 var cors = require('cors')
 app.use(cors());
 
+var readyForNext = true;
 
 function dataScrape() {
 
@@ -33,14 +34,11 @@ function dataScrape() {
                       var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
                       console.log(diffDays);
                       if(diffDays === 7 || diffDays === 1) {
-                          request.post('https://rest.nexmo.com/sms/json', {form:{
-                            "api_key": "3763e1cc",
-                            "api_secret": "6efbe39cd7742b20",
-                            "to": data.users[k].phone_number,
-                            "from": "12016441506",
-                            "text": "Just a reminder that you only have " + diffDays + (diffDays == 1 ? " day " : " days " ) + "until your " + data.users[k].colleges[k2].name + " application is due!!! Get motivated!!"
-                        } 
-                      });
+                          console.log("READY PLAYER 1")
+                          massText(data, diffDays, k, k2);
+                          console.log("sending reminder!");
+                      
+
                     }
               };
           });
@@ -53,13 +51,36 @@ function dataScrape() {
 
 
 
+
 dataScrape();
 setTimeout(dataScrape, 8.64e+7);
 
-function massText() {
-
+function massText(data, diffDays, k , k2) {
+    if(!readyForNext) {
+        setTimeout(function() { massText(data, diffDays, k, k2) }, 1000);
+        return;
+    } 
+    if(readyForNext) {
+      readyForNext = false;
+      request.post('https://rest.nexmo.com/sms/json', {form:{
+        "api_key": "3763e1cc",
+        "api_secret": "6efbe39cd7742b20",
+        "to": data.users[k].phone_number,
+        "from": "12016441506",
+        "text": "Just a reminder that you only have " + diffDays + (diffDays == 1 ? " day " : " days " ) + "until your " + data.users[k].colleges[k2].name + " application is due!!! Get motivated!!",
+        } 
+      }, function(err,httpResponse,body) {
+            console.log(body);
+           setTimeout(setrdyTrue, 1000)
+            
+        }
+       );
+    }
 }
 
+function setrdyTrue() {
+    readyForNext = true
+}
 
 function isDateValid(d) {
       if ( Object.prototype.toString.call(d) === "[object Date]" ) {
